@@ -1,0 +1,7 @@
+FROM ubuntu:bionic
+
+RUN apt-get update && apt-get install -y ethtool curl iproute2 net-tools iputils-ping
+
+# Spoiler alert!
+# Interface is down, fixed by `ip link set eth0 up`
+CMD exec /bin/sh -c "trap : TERM INT; ip link set eth0 down; sleep infinity & wait"

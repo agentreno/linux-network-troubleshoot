@@ -1,0 +1,8 @@
+FROM ubuntu:bionic
+
+RUN apt-get update && apt-get install -y ethtool curl iproute2 net-tools iputils-ping dnsutils
+
+# Spoiler alert!
+# Default route is deleted, requires checking IP+mask on interface and readding
+# e.g. `ip route add 172.20.0.0/16 dev eth0`
+CMD exec /bin/sh -c "trap : TERM INT; ip route flush table main; sleep infinity & wait"
